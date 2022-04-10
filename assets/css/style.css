@@ -1,6 +1,7 @@
 :root{
     --brand-dark-bg: #2A1D33;
     --quiz-con-dark-bg: #2F2F2F;
+    --gradient-bg: linear-gradient(89.34deg, #5C8DEC 4.29%, #C322FB 108.01%);
 }
 
 body{
@@ -19,5 +20,46 @@ body{
     background-color: rgb(33, 30, 30);
     min-height:400px;
     margin: auto;
+    background:#2A1D33;
     
+}
+
+.button {
+    z-index: 1;
+    text-decoration: none;
+    margin: 10px;
+    letter-spacing: 2px;
+    color: white;
+    border: 1px solid rgba(255, 255, 255,0.3);
+    padding: 10px 20px;
+    position: relative;
+    overflow: hidden;
+    transform: color 1s ease;
+    
+    background:rgba(33, 30, 30,0.0);
+   
+    
+}
+
+.button:hover{
+    color: black;
+    
+}
+
+.button::before{
+    content: '';
+    position: absolute;
+    top:0;
+    left: -50px;
+    width:0%;
+    height: 100%;
+    background:var(--gradient-bg);
+    transform: skewX(35deg);
+    z-index: -1;
+    transition: width 0.3s ease-out;
+    
+}
+
+.button:hover::before{
+    width: 250%;
 }

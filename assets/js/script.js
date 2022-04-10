@@ -64,7 +64,7 @@ function displayCurrentQuestion(pCurrentQuestion) {
      `;
     for (let i = 0; i < answerOrder.length; i++) {
       htmlTemplate += `
-         <button class='userPick' data-selected='${answerOrder[i]}'>${
+         <button class='userPick button' data-selected='${answerOrder[i]}'>${
         pCurrentQuestion.answers[answerOrder[i]]
       }</button>
          </br>

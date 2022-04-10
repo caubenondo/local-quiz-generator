@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Local Quiz Generator</title>
+    <link rel="stylesheet" href="./assets/css/style.css">
+</head>
+<body>
+    <h1 style="text-align:center;">Quiz</h1>
+    <div class="quiz-container">
+        <div class="nav"><h2>Navbar Here</h2></div>
+        <div class="quiz-area"></div>
+        
+        
+        
+        <div class="addQuestionForm">
+            <div class="input-group">
+                <label for="addPrompt">Prompt</label>
+                <input type="textarea" name="pompt" id="addPrompt" placeholder="Question" />
+            </div>
+            <div class="input-group">
+                <label for="addAnswerA">A</label>
+                <input type="text" name="answerA" id="addAnswerA" placeholder="Answer A" />
+            </div>
+            <div class="input-group">
+                <label for="addAnswerB">B</label>
+                <input type="text" name="answerB" id="addAnswerB" placeholder="Answer B" />
+            </div>
+            <div class="input-group">
+                <label for="addAnswerC">C</label>
+                <input type="text" name="answerC" id="addAnswerC" placeholder="Answer C" />
+            </div>
+            <div class="input-group">
+                <label for="addAnswerD">D</label>
+                <input type="text" name="answerD" id="addAnswerD" placeholder="Answer D" />
+            </div>
+            <div class="input-group">
+                <label for="correctAnswer">Correct answer: </label>
+            <select id="correctAnswer">
+                <option value="a">A</option>
+                <option value="b">B</option>
+                <option value="c">C</option>
+                <option value="d">D</option>
+              </select>
+            </div>
+            <button id ='addQuestion'>Add question</button>
+        </div>
+
+    </div>
+
+    
+    <script src="./assets/js/script.js"></script>
+</body>
+</html>

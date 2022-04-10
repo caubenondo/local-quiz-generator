@@ -1,0 +1,23 @@
+:root{
+    --brand-dark-bg: #2A1D33;
+    --quiz-con-dark-bg: #2F2F2F;
+}
+
+body{
+    background-color: var(--brand-dark-bg);
+    color: white;
+}
+.quiz-container {
+    background-color: var(--quiz-con-dark-bg);
+    min-height: 800px;
+    width: 80%;
+    margin: 0 auto;
+}
+
+.quiz-area{
+    width: 80%;
+    background-color: rgb(33, 30, 30);
+    min-height:400px;
+    margin: auto;
+    
+}

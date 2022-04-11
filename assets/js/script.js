@@ -4,16 +4,17 @@ const quizAreaEl = document.querySelector(".quiz-area");
 // placeholder for question we are currently quizin
 let currentQuestion = {};
 let askingQueue = [];
-const quizTime = 10;
+const quizTime = 20;
 let timer = 0;
 const timerDisplayEl = document.querySelector(".progressBar");
 const quizBank = [];
 const choices = ["a", "b", "c", "d"];
 let userScore = 0;
-
-const userScoreEl = document.querySelector('.userScore');
-const stopWatchButton = document.querySelector('#stopWatch');
-stopWatchButton.addEventListener('click', timeWatcher);
+const questionBarEl = document.querySelector(".questionsBar");
+let questionBarTracker = 0;
+const userScoreEl = document.querySelector(".userScore");
+const stopWatchButton = document.querySelector("#stopWatch");
+stopWatchButton.addEventListener("click", timeWatcher);
 
 // sample questions
 const q1 = {
@@ -66,14 +67,16 @@ function displayCurrentQuestion(pCurrentQuestion) {
 
     // crafting template literal with currentquestion data
     let htmlTemplate = `
-         <h2>${pCurrentQuestion.prompt}</h2>
+         <h2 class='animate__animated animate__lightSpeedInLeft'>${pCurrentQuestion.prompt}</h2>
+         <hr class='animate__animated animate__lightSpeedInLeft'/>
          <div class='multipleChoices'>
      `;
     for (let i = 0; i < answerOrder.length; i++) {
       htmlTemplate += `
-         <button class='userPick button' data-selected='${answerOrder[i]}'>${
-        pCurrentQuestion.answers[answerOrder[i]]
-      }</button>
+         <button class='userPick button animate__animated animate__lightSpeedInLeft' 
+         data-selected='${answerOrder[i]}'>
+         ${pCurrentQuestion.answers[answerOrder[i]]}
+         </button>
          </br>
          `;
     }
@@ -103,9 +106,10 @@ function submitAnswerHandler(event) {
       // reward user 2s
       // update score
       // queue in the next question
-      timer +=5;
-      userScore +=10;
-      displayUserScore();
+
+      displayUserScore("correct", 5, 10);
+      questionBarEl.children[questionBarTracker].classList.add('greenBG');
+      questionBarTracker++;
       askingQueue.shift();
       askQuestion();
     } else {
@@ -114,9 +118,9 @@ function submitAnswerHandler(event) {
       // minus 5s on the time counter
       // updatescore
       // queue in the next question
-      timer -=2;
-      userScore -=5;
-      displayUserScore();
+      questionBarEl.children[questionBarTracker].classList.add('redBG');
+      questionBarTracker++;
+      displayUserScore("wrong", 2, 5);
       askingQueue.shift();
       askQuestion();
     }
@@ -145,64 +149,99 @@ function isCorrect(input) {
 }
 
 function askQuestion() {
-  if (askingQueue.length !== 0 && timer>0) {
+  if (askingQueue.length !== 0 && timer > 0) {
     currentQuestion = askingQueue[0];
     displayCurrentQuestion(currentQuestion);
   } else {
     quizAreaEl.textContent = "No Question";
+    questionBarTracker = 0;
   }
 }
 
-function finalScoreDisplay(){
+function finalScoreDisplay() {
   quizAreaEl.innerHTML = `
     <p>Display userScore and ask if they want to add to records</p>
   `;
 }
 
 function init() {
-  updateTimerDisplay(0,0,false);
+  updateTimerDisplay(0, 0, false);
   dataHandler();
   askQuestion();
-  
 }
 
 init();
 
-function displayUserScore(){
-  userScoreEl.innerHTML = `<h5>Score: ${userScore}</h5>`;
+function displayUserScore(op = "", ptime = 0, pscore = 0) {
+  if (op == "correct") {
+    userScore += pscore;
+    timer += ptime;
+  } else if (op == "wrong") {
+    userScore -= pscore;
+    timer -= ptime;
+  }
+  userScoreEl.innerHTML = `<div class='scoreDiv'><p>Scores</p><div class='animate__animated animate__tada ${
+    userScore >= 0 ? "green" : "red"
+  }'>${userScore} ${
+    userScore == 1 || userScore == 0 ? " pt" : " pts"
+  }</div></div>`;
 }
 
 /* TIMER / COUNTER - Time handling*/
 
-
+const stopWatchIcon = document.querySelector(".fa-solid.fa-stopwatch");
 function timeWatcher() {
   stopWatchButton.disabled = true;
+  stopWatchIcon.className += " fa-beat";
   timer = quizTime;
   userScore = 0;
+  hideAbsoluteEl(viewRankViewEl);
+  hideAbsoluteEl(addQuestioFormEl);
+  showAbsoluteEl(quizAreaEl);
+
+  dataHandler();
   askQuestion();
   displayUserScore();
+  //update the number of question bar
+  let questionBarHTML = ``;
+  for (let i = 0; i < askingQueue.length; i++) {
+    questionBarHTML += `<div class="qfill">.</div>`;
+  }
+  questionBarEl.innerHTML = questionBarHTML;
+  const questionBarCSSStyle = `visibility:visible; grid-template-columns: repeat(${askingQueue.length},1fr)`;
+  questionBarEl.setAttribute("style", questionBarCSSStyle);
+
   const everyMinute = setInterval(() => {
     timer--;
-    updateTimerDisplay(quizTime, timer,true);
+    updateTimerDisplay(quizTime, timer, true);
 
     if (timer <= 0) {
-      updateTimerDisplay(quizTime, timer,false);
-      finalScoreDisplay()
+      updateTimerDisplay(quizTime, timer, false);
+      finalScoreDisplay();
       clearInterval(everyMinute);
+      stopWatchIcon.className = "fa-solid fa-stopwatch";
+      questionBarTracker = 0;
     }
   }, 1000);
 }
 function updateTimerDisplay(maxTime, timeLeft, isRunning) {
-  let htmlTemplate =``
+  let htmlTemplate = ``;
   if (isRunning == true) {
     htmlTemplate = `
-      <label for='timer'>${timeLeft} s</label>
+      <label for='timer' class='${
+        timeLeft > (quizTime * 2) / 3
+          ? "green"
+          : timeLeft > quizTime / 3
+          ? "yellow"
+          : "red"
+      }'>
+        <span style='font-size:2rem;'>${timeLeft}</span> 
+        <i class="fa-solid fa-hourglass animate__animated animate__rotateIn"></i> 
+      </label>
       <progress id='timer' value='${timeLeft}' max='${maxTime}'></progress>
     `;
-   
-  }
-  else{
-    htmlTemplate = `<p> NO TIME LEFT</p`;
+  } else {
+    htmlTemplate = `<p> <-- Click to play again</p`;
     stopWatchButton.disabled = false;
   }
   timerDisplayEl.innerHTML = htmlTemplate;
@@ -246,10 +285,41 @@ function addQuestionToBank() {
 
   // clear or reset input values
   const inputs = document.querySelectorAll(".addQuestionForm input");
-  console.log(inputs);
+  // console.log(inputs);
   inputs.forEach((input) => {
     input.value = "";
   });
   correct.selectedIndex = 0;
   // end clearing
+}
+const viewRankViewEl = document.querySelector(".viewRankView");
+const addQuestioFormEl = document.querySelector(".addQuestionForm");
+document
+  .querySelector(".addQuestionButton")
+  .addEventListener("click", showAddQuestionForm);
+function showAddQuestionForm() {
+  hideAbsoluteEl(viewRankViewEl);
+  hideAbsoluteEl(quizAreaEl);
+  showAbsoluteEl(addQuestioFormEl);
+}
+
+document
+  .querySelector(".viewRanksButton")
+  .addEventListener("click", displayRanksView);
+function displayRanksView() {
+  hideAbsoluteEl(addQuestioFormEl);
+  hideAbsoluteEl(quizAreaEl);
+  showAbsoluteEl(viewRankViewEl);
+}
+
+function hideAbsoluteEl(pElement) {
+  pElement.classList.remove("animate__backInUp");
+  pElement.classList.add("animate__backOutDown");
+  pElement.setAttribute("style", "display:none;");
+}
+function showAbsoluteEl(pElement) {
+  pElement.setAttribute("style", "display:block;");
+  // pElement.setAttribute('style','left:0;');
+  pElement.classList.remove("animate__backOutDown");
+  pElement.classList.add("animate__backInUp");
 }

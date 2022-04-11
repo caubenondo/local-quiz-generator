@@ -2,6 +2,8 @@
     --brand-dark-bg: #2A1D33;
     --quiz-con-dark-bg: #2F2F2F;
     --gradient-bg: linear-gradient(89.34deg, #5C8DEC 4.29%, #C322FB 108.01%);
+    --animate-duration: 800ms;
+    --animate-delay: 0.2s;
 }
 
 body{
@@ -17,11 +19,14 @@ body{
 
 .quiz-area{
     width: 80%;
-    background-color: rgb(33, 30, 30);
+    /* background-color: rgb(33, 30, 30); */
     min-height:400px;
     margin: auto;
-    background:#2A1D33;
-    
+    display: none;
+    overflow: hidden;
+    margin: 20px auto;
+    padding: 20px;
+    width: 50%;
 }
 
 .button {
@@ -70,4 +75,94 @@ body{
 }
 .button:disabled:hover{
     color: grey;
+}
+.nav{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin:10px auto;
+    width: 80%;
+}
+
+.quiz-container{
+    display: block;
+    overflow: hidden;
+    position: relative;
+}
+.addQuestionForm {
+    /* position: absolute;
+    left:200vw; */
+    display: none;
+    margin:20px auto;
+    width: 80%;
+}
+.viewRankView{
+    /* position: absolute;
+    left: 200vw; */
+    display: none;
+    margin:20px auto;
+    width: 80%;
+}
+
+
+
+progress[value]{
+    border-radius: 2px;
+    height:3px;
+    background-image: var(--gradient-bg);
+    background-color: #C322FB;
+    color: yellow;
+    width: 80%;
+    padding: 0;
+    margin: 0;
+}
+progress::-webkit-progress-value {
+    background-color: #5c62d4;
+}
+.progressBar{
+    min-width: 200px;
+    width: 300px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.questionsBar{
+    display: grid;
+    width: 100%;
+    visibility: hidden;
+    gap:2px;
+    height: 3px;
+    font-size: 1px;
+    margin-top: 0;
+ 
+}
+
+hr{
+    margin-bottom: 0;
+}
+
+.qfill{
+    background-color: rgb(90, 90, 90);
+    width: 100%;
+    text-align: center;
+    color: rgb(90, 90, 90);
+    overflow: hidden;
+    text-indent: -100000px;
+}
+
+.green{
+    color: rgb(159, 253, 17);
+}
+.red{
+    color: red;
+}
+.yellow{
+    color: rgba(236, 213, 62, 0.997);
+}
+.greenBG{
+    background-color: rgb(159, 253, 17);
+}
+.redBG{
+    background-color: #960000;
 }

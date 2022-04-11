@@ -392,7 +392,7 @@ function displayRanksView() {
   });
   for (let i = 0; i<ranks.length;i++) {
     pHTMLtemplate += `<div style='display:flex; justify-content: space-between;padding:10px;${i%2==0?'background-color:#292b2b;':''} '> 
-    <div>${ranks[i][0]} </div> <div class='${ranks[i][1]>0?'green':'red'}'>${ranks[i][1]}  pts</div>
+    <div>${i+1}. &ensp; ${ranks[i][0]} </div> <div class='${ranks[i][1]>0?'green':'red'}'>${ranks[i][1]}  pts</div>
     
     </div>`
   }

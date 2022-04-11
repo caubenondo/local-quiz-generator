@@ -20,20 +20,23 @@
             <span style="font-size:12px;"><i class="fa-solid fa-circle red"> </i> <i class="fa-solid fa-circle yellow"> </i> <i class="fa-solid fa-circle green"> </i></span> <h1 style="width:80%;">Local Quizz Generator</h1>
         </div>
         <div class="nav">
-            <button class="button" id="stopWatch"><i class="fa-solid fa-stopwatch"></i></button>
+            <button class="button addQuestionButton"><i class="fa-solid fa-folder-plus"></i></button>
+            <button class="button listQuestionsButton"><i class="fa-regular fa-file-lines"></i></button>
+            <div class="userScore">
+                <p>Scores</p>
+                <div class="animate__animated animate__tada green">0  pt</div>
+            </div>
             
             <div class="progressBar">
                 <label for="timer">60s</label>
                 <progress id="timer" value="32" max="60"></progress>
             </div>
-            <div class="userScore">
-                <p>Scores</p>
-                <div class="animate__animated animate__tada green">0  pt</div>
-            </div>
+            
+            <button class="button" id="stopWatch"><i class="fa-solid fa-stopwatch"></i></button>
             <button class="button stopButton"><i class="fa-solid fa-stop"></i></button>
             <button class="button viewRanksButton"><i class="fa-solid fa-ranking-star"></i></button>
-            <button class="button listQuestionsButton"><i class="fa-regular fa-file-lines"></i></button>
-            <button class="button addQuestionButton"><i class="fa-solid fa-folder-plus"></i></button>
+           
+           
             
    
         </div>

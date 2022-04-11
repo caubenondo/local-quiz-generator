@@ -262,7 +262,7 @@ function updateTimerDisplay(maxTime, timeLeft, isRunning) {
       <progress id='timer' value='${timeLeft}' max='${maxTime}'></progress>
     `;
   } else {
-    htmlTemplate = `<p> <-- Click to play again</p`;
+    htmlTemplate = `<p style='text-align:center;'> Click the STOP WATCH to play! ---------------></p`;
     stopWatchButton.disabled = false;
   }
   timerDisplayEl.innerHTML = htmlTemplate;

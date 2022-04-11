@@ -1,20 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;700&display=swap');
 :root{
     --brand-dark-bg: #2A1D33;
     --quiz-con-dark-bg: #2F2F2F;
-    --gradient-bg: linear-gradient(89.34deg, #5C8DEC 4.29%, #C322FB 108.01%);
+    --gradient-bg: linear-gradient(89.34deg, #5C8DEC 4.29%, #C322FB 108.01%);;
     --animate-duration: 800ms;
     --animate-delay: 0.2s;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 100;
+    line-height: 2;
 }
 
 body{
     background-color: var(--brand-dark-bg);
     color: white;
+    position: relative;
+}
+h2{
+    font-size: 2rem;
 }
 .quiz-container {
     background-color: var(--quiz-con-dark-bg);
+    min-height: 400px;
+    width: 70%;
+    max-width: 900px;
     min-height: 800px;
-    width: 80%;
     margin: 0 auto;
+    position: absolute;
+    top: -100px;
 }
 
 .quiz-area{
@@ -36,13 +48,14 @@ body{
     letter-spacing: 2px;
     color: white;
     border: 1px solid rgba(255, 255, 255,0.3);
-    padding: 10px 20px;
+    padding: 10px;
     position: relative;
     overflow: hidden;
     transform: color 1s ease;
-    
+  
     background:rgba(33, 30, 30,0.0);
-   
+    font-family: 'Roboto', sans-serif;
+    font-weight: 100;
     
 }
 
@@ -68,7 +81,7 @@ body{
     width: 20%;
 }
 .button:hover::before{
-    width: 250%;
+    width: 550%;
 }
 .button:disabled{
     color: grey;
@@ -81,13 +94,16 @@ body{
     justify-content: space-between;
     align-items: center;
     margin:10px auto;
-    width: 80%;
+    width: 90%;
+    flex-wrap: wrap;
 }
 
 .quiz-container{
     display: block;
     overflow: hidden;
     position: relative;
+    box-shadow: 2px 4px 8px 2px rgba(0, 0, 0, 0.25);
+
 }
 .addQuestionForm {
     /* position: absolute;
@@ -95,6 +111,19 @@ body{
     display: none;
     margin:20px auto;
     width: 80%;
+}
+.promptQuestionForm{
+    display: flex;
+    gap: 30px
+}
+.answerForm{
+    display: flex;
+    gap:10px;
+    flex-direction: column;
+}
+
+label{
+    padding: 5px;
 }
 .viewRankView{
     /* position: absolute;
@@ -104,8 +133,14 @@ body{
     width: 80%;
 }
 
-
-
+.listQuestionView{
+    display: none;
+    margin:20px auto;
+    width: 60%;
+}
+.listQuestionView li{
+    margin-bottom: 10px;;
+}
 progress[value]{
     border-radius: 2px;
     height:3px;
@@ -117,7 +152,7 @@ progress[value]{
     margin: 0;
 }
 progress::-webkit-progress-value {
-    background-color: #5c62d4;
+    background: var(--gradient-bg);
 }
 .progressBar{
     min-width: 200px;
@@ -139,7 +174,10 @@ progress::-webkit-progress-value {
 }
 
 hr{
+    border: none;
     margin-bottom: 0;
+    border-top: solid 1px #5E5E5E;
+    
 }
 
 .qfill{
@@ -165,4 +203,37 @@ hr{
 }
 .redBG{
     background-color: #960000;
+}
+
+.title{
+    display: flex;
+    width: 100%;
+    background-color: #252525;
+    padding: 5px 10px;
+    gap:10px;
+    align-items: center;
+    text-align: center;
+}
+
+.hero-image{
+    width: 100%;
+    min-height: 200px;
+    background: var(--gradient-bg);
+}
+
+textarea,select{
+    background: none;
+    color: white;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 100;
+}
+
+input[type='text']{
+    background: none;
+    color: white;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 100;
+    border: solid 1px #5E5E5E;
+    padding: 5px;
+    
 }

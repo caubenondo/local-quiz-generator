@@ -67,7 +67,7 @@ function displayCurrentQuestion(pCurrentQuestion) {
 
     // crafting template literal with currentquestion data
     let htmlTemplate = `
-         <h2 class='animate__animated animate__lightSpeedInLeft'>${pCurrentQuestion.prompt}</h2>
+         <pre class='animate__animated animate__lightSpeedInLeft' style="font-size:1.3rem;line-height:1.5;">${pCurrentQuestion.prompt}</pre>
          <hr class='animate__animated animate__lightSpeedInLeft'/>
          <div class='multipleChoices'>
      `;
@@ -98,27 +98,27 @@ function submitAnswerHandler(event) {
   if (element.matches("button")) {
     //grab user's choice
     let choice = element.dataset.selected;
-    console.log(choice);
+    // console.log(choice);
 
     if (isCorrect(choice)) {
-      console.log("Correct answer - handle logic when user pick right answer.");
+      // console.log("Correct answer - handle logic when user pick right answer.");
       // display feedback right
       // reward user 2s
       // update score
       // queue in the next question
 
       displayUserScore("correct", 5, 10);
-      questionBarEl.children[questionBarTracker].classList.add('greenBG');
+      questionBarEl.children[questionBarTracker].classList.add("greenBG");
       questionBarTracker++;
       askingQueue.shift();
       askQuestion();
     } else {
-      console.log("wrong answer - handle logic when user picks wrong answers");
+      // console.log("wrong answer - handle logic when user picks wrong answers");
       // display "wrong"
       // minus 5s on the time counter
       // updatescore
       // queue in the next question
-      questionBarEl.children[questionBarTracker].classList.add('redBG');
+      questionBarEl.children[questionBarTracker].classList.add("redBG");
       questionBarTracker++;
       displayUserScore("wrong", 2, 5);
       askingQueue.shift();
@@ -153,16 +153,36 @@ function askQuestion() {
     currentQuestion = askingQueue[0];
     displayCurrentQuestion(currentQuestion);
   } else {
-    quizAreaEl.textContent = "No Question";
+    quizAreaEl.innerHTML = "<h2>Holla! You answer very quick!</h2>";
+    timer=1;
     questionBarTracker = 0;
   }
 }
 
 function finalScoreDisplay() {
-  quizAreaEl.innerHTML = `
-    <p>Display userScore and ask if they want to add to records</p>
+  let pHTMLtemplate =`
+  <form id="username-form">
+  <label for="username-text" class="${userScore>=0? 'green':'red'}"> You scored ${userScore} pts! </label> <br/>
+  <input type="text" placeholder="Enter your name" name="username" id="username-text" />
+  <hr style='margin: 30px auto;'/>
+  ${userScore>0? '<h3 class="green">Keep it up!</h3>':'<h3 class="red">TRY AGAIN! Practice makes perfect!</h3>'}
+  
+  </form>
   `;
+  quizAreaEl.innerHTML = pHTMLtemplate;
+  document.querySelector('#username-form').addEventListener('submit',function(e){
+    e.preventDefault();
+    let username = document.querySelector('#username-text');
+    let localRank = JSON.parse(localStorage.getItem('ranks')) || [];
+    localRank.push([username.value,userScore]);
+    localStorage.setItem('ranks',JSON.stringify(localRank));
+    username.value = '';
+    quizAreaEl.innerHTML = `<div class='green'><p>Your score has been saved!</p> <p>Click the ranking button to see the records!</p></div>`;
+    return;
+  });
+
 }
+
 
 function init() {
   updateTimerDisplay(0, 0, false);
@@ -197,6 +217,7 @@ function timeWatcher() {
   userScore = 0;
   hideAbsoluteEl(viewRankViewEl);
   hideAbsoluteEl(addQuestioFormEl);
+  hideAbsoluteEl(listQuesitonViewEl);
   showAbsoluteEl(quizAreaEl);
 
   dataHandler();
@@ -234,7 +255,7 @@ function updateTimerDisplay(maxTime, timeLeft, isRunning) {
           : timeLeft > quizTime / 3
           ? "yellow"
           : "red"
-      }'>
+      }' style="width:80px;">
         <span style='font-size:2rem;'>${timeLeft}</span> 
         <i class="fa-solid fa-hourglass animate__animated animate__rotateIn"></i> 
       </label>
@@ -289,27 +310,94 @@ function addQuestionToBank() {
   inputs.forEach((input) => {
     input.value = "";
   });
+  document.querySelector('#addPrompt').value = "";
   correct.selectedIndex = 0;
   // end clearing
 }
 const viewRankViewEl = document.querySelector(".viewRankView");
 const addQuestioFormEl = document.querySelector(".addQuestionForm");
+const listQuesitonViewEl = document.querySelector('.listQuestionView');
+
 document
   .querySelector(".addQuestionButton")
   .addEventListener("click", showAddQuestionForm);
 function showAddQuestionForm() {
+  timer = 0;
   hideAbsoluteEl(viewRankViewEl);
   hideAbsoluteEl(quizAreaEl);
+  hideAbsoluteEl(listQuesitonViewEl);
   showAbsoluteEl(addQuestioFormEl);
 }
+document.querySelector('.listQuestionsButton').addEventListener('click',displayAllQuestions);
+function displayAllQuestions(){
+  timer = 0;
+  hideAbsoluteEl(viewRankViewEl);
+  hideAbsoluteEl(quizAreaEl);
+  hideAbsoluteEl(addQuestioFormEl);
+  showAbsoluteEl(listQuesitonViewEl);
+
+  let pHTMLtemplate=``;
+  let localQuizBank = JSON.parse(localStorage.getItem('quizBank')) || [];
+  if(localQuizBank.length!=0){
+    for( let i =0; i< localQuizBank.length;i++){
+      pHTMLtemplate += `
+      <hr/>
+      <section style='display:flex; gap:2rem; align-items:start; padding: 10px 5px;'>
+      <button class='button red trashQuestionButton' style="margin-top:0px;" data-index='${i}'><i class="fa-regular fa-trash-can" data-index='${i}'></i></button>    
+      <header style='min-width:200px;'><p class='green'>${localQuizBank[i].prompt}</p></header>
+          <ul>
+            <li>A. ${localQuizBank[i].answers.a}</li>
+            <li>B. ${localQuizBank[i].answers.b}</li>
+            <li>C. ${localQuizBank[i].answers.c}</li>
+            <li>D. ${localQuizBank[i].answers.d}</li>
+          </ul>
+          
+      </section>    
+      `;
+    }
+  }
+  else{
+    pHTMLtemplate=`<h2>There is nothing to see here!!!</h2>
+    <p>Click the + button to add questions onto quiz bank.</p>
+    `;
+  }
+  listQuesitonViewEl.innerHTML =pHTMLtemplate;
+  document.querySelector('.listQuestionView').addEventListener('click',function(e){
+      let pElement = e.target;  
+    if(pElement.matches('.trashQuestionButton') || pElement.matches('.trashQuestionButton i')){
+      localQuizBank.splice(pElement.dataset.index,1);
+      localStorage.setItem('quizBank',JSON.stringify(localQuizBank));    
+    }
+    displayAllQuestions();
+      return;
+  });
+
+}
+
+
 
 document
   .querySelector(".viewRanksButton")
   .addEventListener("click", displayRanksView);
 function displayRanksView() {
+  timer=0;
   hideAbsoluteEl(addQuestioFormEl);
   hideAbsoluteEl(quizAreaEl);
+  hideAbsoluteEl(listQuesitonViewEl);
   showAbsoluteEl(viewRankViewEl);
+  let pHTMLtemplate=`<p style='font-size:2rem;'>Ranking</p>`;
+  let ranks = JSON.parse(localStorage.getItem('ranks')) || [['You will be the first!',0]];
+  ranks.sort(function(a,b){
+    return b[1]-a[1];
+  });
+  for (const i of ranks) {
+    pHTMLtemplate += `<hr/><div style='display:flex; justify-content: space-between;padding:10px;'> 
+    <div>${i[0]} </div> <div class='${i[1]>0?'green':'red'}'>${i[1]}</div>
+    
+    </div>`
+  }
+
+  viewRankViewEl.innerHTML = pHTMLtemplate;
 }
 
 function hideAbsoluteEl(pElement) {
@@ -323,3 +411,7 @@ function showAbsoluteEl(pElement) {
   pElement.classList.remove("animate__backOutDown");
   pElement.classList.add("animate__backInUp");
 }
+
+document.querySelector(".stopButton").addEventListener("click", function () {
+  timer = 0;
+});

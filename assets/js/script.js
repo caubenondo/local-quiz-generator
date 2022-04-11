@@ -385,14 +385,14 @@ function displayRanksView() {
   hideAbsoluteEl(quizAreaEl);
   hideAbsoluteEl(listQuesitonViewEl);
   showAbsoluteEl(viewRankViewEl);
-  let pHTMLtemplate=`<p style='font-size:2rem;'>Ranking</p>`;
+  let pHTMLtemplate=`<p style='font-size:2rem; font-weight:400; margin-bottom:10px;'>Ranking</p><hr/>`;
   let ranks = JSON.parse(localStorage.getItem('ranks')) || [['You will be the first!',0]];
   ranks.sort(function(a,b){
     return b[1]-a[1];
   });
-  for (const i of ranks) {
-    pHTMLtemplate += `<hr/><div style='display:flex; justify-content: space-between;padding:10px;'> 
-    <div>${i[0]} </div> <div class='${i[1]>0?'green':'red'}'>${i[1]}</div>
+  for (let i = 0; i<ranks.length;i++) {
+    pHTMLtemplate += `<div style='display:flex; justify-content: space-between;padding:10px;${i%2==0?'background-color:#292b2b;':''} '> 
+    <div>${ranks[i][0]} </div> <div class='${ranks[i][1]>0?'green':'red'}'>${ranks[i][1]}  pts</div>
     
     </div>`
   }

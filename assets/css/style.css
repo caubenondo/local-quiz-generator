@@ -8,6 +8,7 @@
     font-family: 'Roboto', sans-serif;
     font-weight: 100;
     line-height: 2;
+    font-size: 14px;
 }
 
 body{
@@ -53,10 +54,12 @@ h2{
     position: relative;
     overflow: hidden;
     transform: color 1s ease;
-  
     background:rgba(33, 30, 30,0.0);
     font-family: 'Roboto', sans-serif;
     font-weight: 100;
+    border-radius: 5px;
+    font-size: 1rem;
+    
     
 }
 
@@ -82,7 +85,7 @@ h2{
     width: 20%;
 }
 .button:hover::before{
-    width: 550%;
+    width: 350%;
 }
 .button:disabled{
     color: grey;
@@ -227,6 +230,7 @@ textarea,select{
     color: white;
     font-family: 'Roboto', sans-serif;
     font-weight: 100;
+    border-radius: 5px;
 }
 
 input[type='text']{
@@ -236,5 +240,5 @@ input[type='text']{
     font-weight: 100;
     border: solid 1px #5E5E5E;
     padding: 5px;
-    
+    border-radius: 5px;
 }

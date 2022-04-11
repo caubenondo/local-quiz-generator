@@ -376,7 +376,7 @@ function displayAllQuestions() {
   } else {
     // this block will handle situation when there is no question in the bank to load
     pHTMLtemplate = `<h2>There is nothing to see here!!!</h2>
-    <p>Click the + button to add questions onto quiz bank.</p>
+    <p>Click the <span><i class="fa-solid fa-folder-plus"></i> </span>button to add questions onto quiz bank.</p>
     `;
   }
   // swap the content of listQuesitonViewEl with our new crafted HTML content

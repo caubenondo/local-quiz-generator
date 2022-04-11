@@ -151,7 +151,7 @@ function finalScoreDisplay() {
               ? "background-color: #252525; padding:10px 5px;"
               : ""
           }'>
-            <div>${localRank.indexOf(i)}. ${i[0]}</div>
+            <div>${localRank.indexOf(i)+1}. ${i[0]}</div>
             <div>${i[1]} pts</div>
           </section>
         `;

@@ -6,14 +6,13 @@ const questionBarEl = document.querySelector(".questionsBar");
 const userScoreEl = document.querySelector(".userScore");
 // placeholder for question we are currently quizin
 
-
 // const quizBank = [];
 // choices array is for answer shuffling purpose
 const choices = ["a", "b", "c", "d"];
 // Countdown time starter - change it when you need more time
 const quizTime = 20;
 
-// VIEW Constants of RANK page, Add question page, All Questions page 
+// VIEW Constants of RANK page, Add question page, All Questions page
 const viewRankViewEl = document.querySelector(".viewRankView");
 const addQuestioFormEl = document.querySelector(".addQuestionForm");
 const listQuesitonViewEl = document.querySelector(".listQuestionView");
@@ -75,6 +74,7 @@ function submitAnswerHandler(event) {
 
       displayUserScore("correct", 5, 10);
       questionBarEl.children[questionBarTracker].classList.add("greenBG");
+      console.log(questionBarTracker);
       questionBarTracker++;
       askingQueue.shift();
       askQuestion();
@@ -115,7 +115,6 @@ function isCorrect(input) {
   return input === currentQuestion.correct ? true : false;
 }
 
-
 // prompt them the 'what your name' prompt form, then store it to local storage
 function finalScoreDisplay() {
   let pHTMLtemplate = `
@@ -133,7 +132,7 @@ function finalScoreDisplay() {
   </form>
   `;
   quizAreaEl.innerHTML = pHTMLtemplate;
-  
+
   // listen to the form submit button, update the records with user input
   document
     .querySelector("#username-form")
@@ -144,11 +143,15 @@ function finalScoreDisplay() {
       localRank.push([username.value, userScore]);
       localStorage.setItem("ranks", JSON.stringify(localRank));
       username.value = "";
-      let templateHTML = `<h2>Ranking</h2>`;
+      let templateHTML = `<h2>Entries</h2>`;
       for (const i of localRank) {
         templateHTML += `<hr> 
-          <section style='display:flex; justify-content: space-between; margin:10px auto; ${localRank.indexOf(i)==(localRank.length-1)? 'background-color: #252525; padding:10px 5px;':''}'>
-            <div>${i[0]}</div>
+          <section style='display:flex; justify-content: space-between; margin:10px auto; ${
+            localRank.indexOf(i) == localRank.length - 1
+              ? "background-color: #252525; padding:10px 5px;"
+              : ""
+          }'>
+            <div>${localRank.indexOf(i)}. ${i[0]}</div>
             <div>${i[1]} pts</div>
           </section>
         `;
@@ -159,7 +162,6 @@ function finalScoreDisplay() {
       return;
     });
 }
-
 
 // this function will validate if the user choose the right answer in quiz session or not
 function displayUserScore(op = "", ptime = 0, pscore = 0) {
@@ -344,7 +346,7 @@ function displayAllQuestions() {
   hideAbsoluteEl(addQuestioFormEl);
   showAbsoluteEl(listQuesitonViewEl);
   // delcare an empty tempalte string
-  let pHTMLtemplate = ``;
+  let pHTMLtemplate = `<h2>Question Bank</h2>`;
   // get data/questions from the local storage
   let localQuizBank = JSON.parse(localStorage.getItem("quizBank")) || [];
   // render if quizBank is not emppty
@@ -355,7 +357,12 @@ function displayAllQuestions() {
       <hr/>
       <section style='display:flex; gap:2rem; align-items:start; padding: 10px 5px;'>
       <button class='button red trashQuestionButton' style="margin-top:0px;" data-index='${i}'><i class="fa-regular fa-trash-can" data-index='${i}'></i></button>    
-      <header style='min-width:200px;'><p class='green'>${localQuizBank[i].prompt}</p></header>
+      <header style='min-width:200px;'>
+      <p style="font-size:1.5rem; font-weight:400; color:#6f6f6f;">#${
+        i + 1
+      } </p>
+        <pre >${localQuizBank[i].prompt}</pre>
+      </header>
           <ul>
             <li>A. ${localQuizBank[i].answers.a}</li>
             <li>B. ${localQuizBank[i].answers.b}</li>
@@ -377,7 +384,7 @@ function displayAllQuestions() {
 
   // This will listen to DELETE buttons on list of Question view
   // Notice that I add data-index=quesiton index on both button and icon components of our crafted HTML template
-  // It will help us to know which question index needed to remove from quizBank 
+  // It will help us to know which question index needed to remove from quizBank
   document
     .querySelector(".listQuestionView")
     .addEventListener("click", function (e) {
@@ -413,7 +420,7 @@ function displayRanksView() {
   hideAbsoluteEl(listQuesitonViewEl);
   showAbsoluteEl(viewRankViewEl);
   // establish a string HTML for updating view
-  let pHTMLtemplate = `<p style='font-size:2rem; font-weight:400; margin-bottom:10px;'>Ranking</p><hr/>`;
+  let pHTMLtemplate = `<p style='font-size:2rem; font-weight:400; margin-bottom:10px;'>Leaders Board</p><hr/>`;
   // grab ranks from localstorage, return an array of message if there is none in localstorage
   let ranks = JSON.parse(localStorage.getItem("ranks")) || [
     ["You will be the first!", 0],
@@ -456,8 +463,6 @@ function showAbsoluteEl(pElement) {
 document.querySelector(".stopButton").addEventListener("click", function () {
   timer = 0;
 });
-
-
 
 /* QUIZ prompt and buttons at quizArea component
    This function will
@@ -506,8 +511,6 @@ function displayCurrentQuestion(pCurrentQuestion) {
   }
 }
 
-
-
 /* this function will check if askingQueue contains any question
       if askingqueue does, 
           it will load the 1st question to currentQuestion 
@@ -530,7 +533,6 @@ function askQuestion() {
   }
 }
 
-
 // This function will load/retrieve quizbank from local storage  and shuffle the question order to askingQueue
 function dataHandler() {
   // note: JSON doesnt save methods of object
@@ -545,12 +547,12 @@ function dataHandler() {
   // debug
   //console.log("LOCAL QUIZ BANK");
   // console.table(localQuizBank);
-  
+
   // assign the quizBank to an App's global variable to keep track of question queue
   // this queue will shift(), or take the first question out, after asking and getting answers from user
   askingQueue = localQuizBank;
   shuffleArray(askingQueue);
-  // Debug if the askingQueue is shuffled 
+  // Debug if the askingQueue is shuffled
   //console.table(askingQueue);
 }
 

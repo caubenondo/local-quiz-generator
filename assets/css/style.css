@@ -10,7 +10,7 @@
     line-height: 2;
     font-size: 14px;
 }
-
+/* BASIC TAGS set up */
 body{
     background-color: var(--brand-dark-bg);
     color: white;
@@ -19,30 +19,60 @@ body{
 h2{
     font-size: 2rem;
 }
-.quiz-container {
-    background-color: var(--quiz-con-dark-bg);
-    min-height: 400px;
-    width: 70%;
-    max-width: 900px;
-    min-height: 800px;
-    margin: 0 auto;
-    position: absolute;
-    top: -100px;
-    border-radius: 10px;
+label{
+    padding: 5px;
+}
+textarea,select{
+    background: none;
+    color: white;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 100;
+    border-radius: 5px;
 }
 
-.quiz-area{
+input[type='text']{
+    background: none;
+    color: white;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 100;
+    border: solid 1px #5E5E5E;
+    padding: 5px;
+    border-radius: 5px;
+}
+hr{
+    border: none;
+    margin-bottom: 0;
+    border-top: solid 1px #5E5E5E;
+    
+}
+
+/* PROGRESS BAR edit session */
+progress[value]{
+    border-radius: 2px;
+    height:3px;
+    background-image: var(--gradient-bg);
+    background-color: #C322FB;
+    color: yellow;
     width: 80%;
-    /* background-color: rgb(33, 30, 30); */
-    min-height:400px;
-    margin: auto;
-    display: none;
-    overflow: hidden;
-    margin: 20px auto;
-    padding: 20px;
-    width: 50%;
+    padding: 0;
+    margin: 0;
+}
+progress::-webkit-progress-value {
+    background: var(--gradient-bg);
+}
+.progressBar{
+    min-width: 200px;
+    width: 300px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.progressBar p{
+    margin:0 auto;
 }
 
+
+/* BUTTON Session */
 .button {
     z-index: 1;
     text-decoration: none;
@@ -93,6 +123,17 @@ h2{
 .button:disabled:hover{
     color: grey;
 }
+
+/* SECTIONs */
+.title{
+    display: flex;
+    width: 100%;
+    background-color: #252525;
+    padding: 5px 10px;
+    gap:10px;
+    align-items: center;
+    text-align: center;
+}
 .nav{
     display: flex;
     justify-content: space-between;
@@ -102,23 +143,40 @@ h2{
     flex-wrap: wrap;
 }
 
-.quiz-container{
+.hero-image{
+    width: 100%;
+    min-height: 200px;
+    background: var(--gradient-bg);
+}
+
+
+/* MAIN container */
+.quiz-container {
+    background-color: var(--quiz-con-dark-bg);
+    min-height: 400px;
+    width: 70%;
+    max-width: 900px;
+    min-height: 800px;
+    margin: 0 auto;
+    position: absolute;
+    top: -100px;
+    border-radius: 10px;
     display: block;
     overflow: hidden;
     position: relative;
     box-shadow: 2px 4px 8px 2px rgba(0, 0, 0, 0.25);
-
 }
-.addQuestionForm {
-    /* position: absolute;
-    left:200vw; */
-    display: none;
-    margin:20px auto;
+/* Quiz area view */
+.quiz-area{
     width: 80%;
-}
-.promptQuestionForm{
-    display: flex;
-    gap: 30px
+    /* background-color: rgb(33, 30, 30); */
+    min-height:400px;
+    margin: auto;
+    display: none;
+    overflow: hidden;
+    margin: 20px auto;
+    padding: 20px;
+    width: 50%;
 }
 .answerForm{
     display: flex;
@@ -126,9 +184,11 @@ h2{
     flex-direction: column;
 }
 
-label{
-    padding: 5px;
+/* PAGE VIEWS */
+.listQuestionView li{
+    margin-bottom: 10px;;
 }
+
 .viewRankView{
     /* position: absolute;
     left: 200vw; */
@@ -142,30 +202,20 @@ label{
     margin:20px auto;
     width: 80%;
 }
-.listQuestionView li{
-    margin-bottom: 10px;;
-}
-progress[value]{
-    border-radius: 2px;
-    height:3px;
-    background-image: var(--gradient-bg);
-    background-color: #C322FB;
-    color: yellow;
+.addQuestionForm {
+    /* position: absolute;
+    left:200vw; */
+    display: none;
+    margin:20px auto;
     width: 80%;
-    padding: 0;
-    margin: 0;
 }
-progress::-webkit-progress-value {
-    background: var(--gradient-bg);
-}
-.progressBar{
-    min-width: 200px;
-    width: 300px;
+.promptQuestionForm{
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    gap: 30px
 }
 
+
+/* QUESTION PAGINATION session */
 .questionsBar{
     display: grid;
     width: 100%;
@@ -177,13 +227,6 @@ progress::-webkit-progress-value {
  
 }
 
-hr{
-    border: none;
-    margin-bottom: 0;
-    border-top: solid 1px #5E5E5E;
-    
-}
-
 .qfill{
     background-color: rgb(90, 90, 90);
     width: 100%;
@@ -193,6 +236,62 @@ hr{
     text-indent: -100000px;
 }
 
+@media screen and (max-width:996px) {
+    .quiz-container{
+        width: 80%;
+    }
+    .quiz-area{
+        width: 70%;
+    }
+    .nav{
+        width: 90%;
+        padding:10px;
+        flex-wrap: wrap;
+    }
+    #stopWatch{
+        order:1;
+    }
+    .button.stopButton{
+        order:1;
+    }
+    
+    .button.listQuestionsButton{
+        order:2;
+    }
+    .button.addQuestionButton{
+        order:2;
+    }
+    .button.viewRanksButton{
+        order:3;
+    }
+    .userScore{
+        order:5;
+    }
+    .progressBar{
+        order:4;
+    }
+    
+    .listQuestionView{
+        width: 96%;
+    }
+    .viewRankView{
+        width: 96%;
+    }
+    .addQuestionForm{
+        width: 80%;
+    }
+}
+
+@media screen and (max-width:768px) {
+    .quiz-container{
+        width: 90%;
+    }
+    .quiz-area{
+        width: 80%;
+    }
+}
+
+/* Color class tags on element */
 .green{
     color: rgb(159, 253, 17);
 }
@@ -203,42 +302,8 @@ hr{
     color: rgba(236, 213, 62, 0.997);
 }
 .greenBG{
-    background-color: rgb(159, 253, 17);
+    background-color: rgb(127, 196, 24);
 }
 .redBG{
-    background-color: #960000;
-}
-
-.title{
-    display: flex;
-    width: 100%;
-    background-color: #252525;
-    padding: 5px 10px;
-    gap:10px;
-    align-items: center;
-    text-align: center;
-}
-
-.hero-image{
-    width: 100%;
-    min-height: 200px;
-    background: var(--gradient-bg);
-}
-
-textarea,select{
-    background: none;
-    color: white;
-    font-family: 'Roboto', sans-serif;
-    font-weight: 100;
-    border-radius: 5px;
-}
-
-input[type='text']{
-    background: none;
-    color: white;
-    font-family: 'Roboto', sans-serif;
-    font-weight: 100;
-    border: solid 1px #5E5E5E;
-    padding: 5px;
-    border-radius: 5px;
+    background-color: #560303;
 }

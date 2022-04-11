@@ -423,7 +423,7 @@ function displayRanksView() {
   let pHTMLtemplate = `<p style='font-size:2rem; font-weight:400; margin-bottom:10px;'>Leaders Board</p><hr/>`;
   // grab ranks from localstorage, return an array of message if there is none in localstorage
   let ranks = JSON.parse(localStorage.getItem("ranks")) || [
-    ["You will be the first!", 0],
+    ["This could be your score! ...if you play...", 100000],
   ];
   // sort the ranks by score point
   ranks.sort(function (a, b) {

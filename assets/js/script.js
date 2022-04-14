@@ -41,6 +41,9 @@ const q1 = {
     d: "Sanwiches",
   },
   correct: "c",
+  isCorrect:function(input){
+    return input === this.correct? true: false;
+  }
 };
 
 const q2 = {
@@ -103,6 +106,7 @@ function shuffleAnswers() {
   return pChoices;
 }
 // shuffle an array by swapping random index
+// kinda reverse merge sort - algorithm
 function shuffleArray(array) {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));

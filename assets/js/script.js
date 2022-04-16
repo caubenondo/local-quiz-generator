@@ -4,6 +4,7 @@ const quizAreaEl = document.querySelector(".quiz-area");
 const timerDisplayEl = document.querySelector(".progressBar");
 const questionBarEl = document.querySelector(".questionsBar");
 const userScoreEl = document.querySelector(".userScore");
+const initialDisplay = document.querySelector(".initialDisplay");
 // placeholder for question we are currently quizin
 
 // const quizBank = [];
@@ -204,6 +205,7 @@ function timeWatcher() {
   hideAbsoluteEl(viewRankViewEl);
   hideAbsoluteEl(addQuestioFormEl);
   hideAbsoluteEl(listQuesitonViewEl);
+  hideAbsoluteEl(initialDisplay);
   showAbsoluteEl(quizAreaEl);
 
   // load the questions to the askingQueue
@@ -333,6 +335,7 @@ document
   .addEventListener("click", showAddQuestionForm);
 function showAddQuestionForm() {
   timer = 0;
+  hideAbsoluteEl(initialDisplay);
   hideAbsoluteEl(viewRankViewEl);
   hideAbsoluteEl(quizAreaEl);
   hideAbsoluteEl(listQuesitonViewEl);
@@ -345,6 +348,7 @@ document
 function displayAllQuestions() {
   // show list of Question view, hide the other views
   timer = 0;
+  hideAbsoluteEl(initialDisplay);
   hideAbsoluteEl(viewRankViewEl);
   hideAbsoluteEl(quizAreaEl);
   hideAbsoluteEl(addQuestioFormEl);
@@ -419,6 +423,7 @@ document
 function displayRanksView() {
   // same old trick: show and hide views
   timer = 0;
+  hideAbsoluteEl(initialDisplay);
   hideAbsoluteEl(addQuestioFormEl);
   hideAbsoluteEl(quizAreaEl);
   hideAbsoluteEl(listQuesitonViewEl);
